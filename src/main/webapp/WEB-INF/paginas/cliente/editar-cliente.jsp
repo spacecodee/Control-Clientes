@@ -34,7 +34,7 @@
                             <div class="form-group">
                                 <label for="nombre">Nombre</label>
                                 <input type="text" class="form-control" name="nombre" required id="nombre"
-                                       value="${cliente.nombre} ${cliente.idCliente}">
+                                       value="${cliente.nombre}">
                             </div>
                             <div class="form-group">
                                 <label for="apellido">Apellido</label>

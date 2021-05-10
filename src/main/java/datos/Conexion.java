@@ -14,19 +14,23 @@ public class Conexion {
     private static final String JDBC_USER = "root";
     private static final String JDBC_PASSWORD = "spacecodee";
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/" + Conexion.JDBC_BD + Conexion.JDBC_REQUERIMIENTOS;
+    private static BasicDataSource dataSource;
 
     public Conexion() {
 
     }
 
     public static DataSource getDataSource() {
-        BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        ds.setUrl(Conexion.JDBC_URL);
-        ds.setUsername(Conexion.JDBC_USER);
-        ds.setPassword(Conexion.JDBC_PASSWORD);
-        ds.setInitialSize(50);
-        return ds;
+        if (dataSource == null) {
+            dataSource = new BasicDataSource();
+            dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+            dataSource.setUrl(Conexion.JDBC_URL);
+            dataSource.setUsername(Conexion.JDBC_USER);
+            dataSource.setPassword(Conexion.JDBC_PASSWORD);
+            dataSource.setInitialSize(50);
+
+        }
+        return dataSource;
     }
 
     public static Connection getConnection() throws SQLException {

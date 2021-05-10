@@ -19,11 +19,15 @@ public class ServletControlador extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //super.doGet(req, resp);
+        req.setCharacterEncoding("UTF-8");
         String accion = req.getParameter("accion");
         if (accion != null) {
             switch (accion) {
                 case "editar":
                     this.editar(req, resp);
+                    break;
+                case "eliminar":
+                    this.eliminarCliente(req, resp);
                     break;
                 default:
                     this.accionDefault(req, resp);
@@ -37,6 +41,7 @@ public class ServletControlador extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //super.doPost(req, resp);
+        req.setCharacterEncoding("UTF-8");
         String accion = req.getParameter("accion");
         if (accion != null) {
             switch (accion) {
@@ -126,4 +131,22 @@ public class ServletControlador extends HttpServlet {
         }
         return saldoTotal;
     }
+
+    private void eliminarCliente(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        //recuperamos los valores del formulario editarCliente
+        int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+
+
+        //Creamos el objeto de cliente (modelo)
+        Cliente cliente = new Cliente(idCliente);
+
+        //Eliminamos el  objeto en la base de datos
+        int registrosModificados = new ClienteDaoJDBC().eliminar(cliente);
+        System.out.println("registrosModificados = " + registrosModificados);
+
+        //Redirigimos hacia accion por default
+        this.accionDefault(request, response);
+    }
+
 }
