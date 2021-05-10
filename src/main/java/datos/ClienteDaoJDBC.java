@@ -55,6 +55,9 @@ public class ClienteDaoJDBC {
         Connection conn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
+        int idCliente = 0;
+        String nombre = "", apellido = "", email = "", telefono = "";
+        double saldo = 0;
 
         try {
             conn = Conexion.getConnection();
@@ -62,13 +65,16 @@ public class ClienteDaoJDBC {
             pst.setInt(1, cliente.getIdCliente());
             rs = pst.executeQuery();
 
-            rs.absolute(1); //nos posicionamos en el primer registro devuleto
-            String nombre = rs.getString("nombre");
-            String apellido = rs.getString("apellido");
-            String email = rs.getString("email");
-            String telefono = rs.getString("telefono");
-            double saldo = rs.getDouble("saldo");
+            while (rs.next()) {
+                idCliente = rs.getInt("id_cliente");
+                nombre = rs.getString("nombre");
+                apellido = rs.getString("apellido");
+                email = rs.getString("email");
+                telefono = rs.getString("telefono");
+                saldo = rs.getDouble("saldo");
+            }
 
+            cliente.setIdCliente(idCliente);
             cliente.setNombre(nombre);
             cliente.setApellido(apellido);
             cliente.setEmail(email);
@@ -126,7 +132,7 @@ public class ClienteDaoJDBC {
             pst.setString(1, cliente.getNombre());
             pst.setString(2, cliente.getApellido());
             pst.setString(3, cliente.getEmail());
-            pst.setString(5, cliente.getTelefono());
+            pst.setString(4, cliente.getTelefono());
             pst.setDouble(5, cliente.getSaldo());
             pst.setInt(6, cliente.getIdCliente());
 
