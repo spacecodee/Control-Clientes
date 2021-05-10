@@ -105,9 +105,6 @@ public class ServletControlador extends HttpServlet {
         //Creamos el objeto de cliente (modelo)
         Cliente cliente = new Cliente(idCliente, nombre, apellido, email, telefono, saldo);
 
-        //Modificar el  objeto en la base de datos
-        int registrosModificados = new ClienteDaoJDBC().actualizar(cliente);
-
         //Redirigimos hacia accion por default
         this.accionDefault(request, response);
     }
